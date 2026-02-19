@@ -3,285 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zerowing Studios – Mobile Apps</title>
-    <meta name="description" content="Zerowing Studios makes practical, free Android apps. Discover our collection of audio and utility apps on Google Play.">
+    <title>LiveCamera - Use Your Phone as a Webcam | Zerowing Studios</title>
+    <meta name="description" content="Transform your smartphone into a high-quality webcam for video calls, streaming, and recording. Free download for Windows.">
+    <link rel="icon" type="image/png" href="icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #3498C8;
+            --primary-dark: #2980b9;
             --accent: #00BFA5;
+            --warning: #f39c12;
             --dark: #1a1a2e;
             --darker: #16162a;
-            --card: #1e1e38;
             --light: #ffffff;
             --gray: #8892b0;
             --gradient: linear-gradient(135deg, #3498C8 0%, #00BFA5 100%);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--dark);
             color: var(--light);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Animated background */
-        .bg {
+        /* Animated Background */
+        .bg-animation {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            background:
-                radial-gradient(circle at 15% 85%, rgba(52, 152, 200, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 85% 15%, rgba(0, 191, 165, 0.1) 0%, transparent 50%),
-                var(--dark);
+            background: var(--dark);
         }
 
-        /* Nav */
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(52, 152, 200, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 191, 165, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-20px, -20px) rotate(5deg); }
+        }
+
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 16px 40px;
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(22, 22, 42, 0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: -0.02em;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1.3rem;
         }
 
-        .logo-icon {
-            width: 34px;
-            height: 34px;
-            background: var(--gradient);
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
+        .logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
         }
 
-        .play-link {
+        .nav-links {
             display: flex;
+            gap: 25px;
+            list-style: none;
             align-items: center;
-            gap: 8px;
+        }
+
+        .nav-links a {
             color: var(--gray);
             text-decoration: none;
-            font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.2s;
+            transition: color 0.3s;
+            font-size: 0.95rem;
         }
 
-        .play-link:hover { color: var(--light); }
-
-        .play-link svg { width: 18px; height: 18px; }
-
-        /* Hero */
-        .hero {
-            padding: 160px 20px 80px;
-            text-align: center;
+        .nav-links a:hover {
+            color: var(--light);
         }
 
-        .hero-badge {
-            display: inline-block;
-            background: rgba(52, 152, 200, 0.15);
-            border: 1px solid rgba(52, 152, 200, 0.3);
-            color: var(--primary);
-            padding: 6px 16px;
+        .coffee-btn {
+            background: #FFDD00;
+            color: #000;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 0.82rem;
             font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 24px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .coffee-btn:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 60px;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(52, 152, 200, 0.3);
+            margin-bottom: 30px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
 
         .hero h1 {
-            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-size: 3.5rem;
             font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 16px;
+            margin-bottom: 15px;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
-            font-size: 1.15rem;
+        .hero .tagline {
+            font-size: 1.2rem;
             color: var(--gray);
-            max-width: 480px;
-            margin: 0 auto 40px;
+            max-width: 550px;
+            margin-bottom: 35px;
         }
 
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            flex-wrap: wrap;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
             background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 0.82rem;
-            color: var(--gray);
-            margin-top: 2px;
-        }
-
-        /* Apps Section */
-        .apps {
-            padding: 60px 40px 100px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            text-align: center;
-            font-size: 0.8rem;
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.05rem;
             font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--accent);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(52, 152, 200, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(52, 152, 200, 0.5);
+        }
+
+        .download-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .platform-info {
+            margin-top: 15px;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* Windows Warning Notice - PROMINENT */
+        .windows-notice {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.15) 0%, rgba(231, 76, 60, 0.1) 100%);
+            border: 1px solid rgba(243, 156, 18, 0.4);
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin: 40px auto;
+            max-width: 650px;
+            text-align: left;
+        }
+
+        .windows-notice h3 {
+            color: #f39c12;
+            font-size: 1.1rem;
             margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .windows-notice p {
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .windows-notice .steps {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 15px 0;
+        }
+
+        .windows-notice .steps ol {
+            margin: 0;
+            padding-left: 20px;
+            color: #fff;
+        }
+
+        .windows-notice .steps li {
+            margin: 8px 0;
+        }
+
+        .windows-notice .steps strong {
+            color: var(--accent);
+        }
+
+        .solo-dev-note {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(52, 152, 200, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .solo-dev-note .emoji {
+            font-size: 2rem;
+        }
+
+        .solo-dev-note .text {
+            flex: 1;
+        }
+
+        .solo-dev-note .text p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .solo-dev-note .coffee-link {
+            background: #FFDD00;
+            color: #000;
+            padding: 10px 18px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            transition: transform 0.2s;
+        }
+
+        .solo-dev-note .coffee-link:hover {
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 40px;
+            background: var(--darker);
         }
 
         .section-title {
             text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.2rem;
             margin-bottom: 50px;
-            letter-spacing: -0.02em;
         }
 
-        .apps-grid {
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
-        .app-card {
-            background: var(--card);
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 20px;
-            padding: 28px;
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-            text-decoration: none;
-            color: inherit;
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
         }
 
-        .app-card:hover {
+        .feature-card:hover {
             transform: translateY(-3px);
-            border-color: rgba(52, 152, 200, 0.35);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            border-color: var(--primary);
         }
 
-        .app-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 18px;
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 40px;
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            max-width: 220px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            flex-shrink: 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 auto 15px;
         }
 
-        .app-info { flex: 1; min-width: 0; }
-
-        .app-name {
+        .step h3 {
+            margin-bottom: 8px;
             font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 6px;
         }
 
-        .app-desc {
-            font-size: 0.88rem;
+        .step p {
             color: var(--gray);
-            margin-bottom: 14px;
-            line-height: 1.5;
-        }
-
-        .app-meta {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .app-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #f4c542;
-        }
-
-        .app-tag {
-            font-size: 0.75rem;
-            padding: 3px 10px;
-            border-radius: 10px;
-            background: rgba(52, 152, 200, 0.12);
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .app-tag.green {
-            background: rgba(0, 191, 165, 0.12);
-            color: var(--accent);
-        }
-
-        .play-badge {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.78rem;
-            color: var(--gray);
-            white-space: nowrap;
-        }
-
-        .play-badge svg { width: 14px; height: 14px; }
-
-        /* Windows app card */
-        .app-card.windows-card .app-tag {
-            background: rgba(0, 120, 212, 0.15);
-            color: #60a5fa;
+            font-size: 0.9rem;
         }
 
         /* Footer */
         footer {
-            background: var(--darker);
-            border-top: 1px solid rgba(255,255,255,0.07);
-            padding: 50px 40px;
+            padding: 40px;
             text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--darker);
         }
 
         .footer-logo {
@@ -289,193 +389,209 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 12px;
-            font-weight: 700;
-            font-size: 1.1rem;
+            margin-bottom: 15px;
         }
 
-        .footer-logo .logo-icon {
+        .footer-logo img {
             width: 28px;
             height: 28px;
-            font-size: 0.9rem;
+            border-radius: 6px;
         }
 
         footer p {
             color: var(--gray);
             font-size: 0.85rem;
-            margin-bottom: 20px;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
         }
 
         .footer-links {
+            margin-top: 15px;
             display: flex;
             justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .footer-links a {
             color: var(--gray);
-            text-decoration: none;
             font-size: 0.85rem;
-            transition: color 0.2s;
         }
 
-        .footer-links a:hover { color: var(--light); }
+        .footer-links a:hover {
+            color: var(--light);
+        }
 
         /* Responsive */
         @media (max-width: 768px) {
-            nav { padding: 14px 20px; }
-            .hero { padding: 130px 20px 60px; }
-            .hero-stats { gap: 30px; }
-            .apps { padding: 40px 20px 80px; }
-            .apps-grid { grid-template-columns: 1fr; }
-            .app-card { padding: 20px; }
-            footer { padding: 40px 20px; }
+            nav {
+                padding: 12px 15px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+
+            .hero .tagline {
+                font-size: 1rem;
+            }
+
+            .hero-icon {
+                width: 90px;
+                height: 90px;
+            }
+
+            .windows-notice {
+                margin: 30px 15px;
+                padding: 20px;
+            }
+
+            .solo-dev-note {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .steps-container {
+                gap: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="bg"></div>
+    <div class="bg-animation"></div>
 
+    <!-- Navigation -->
     <nav>
         <div class="logo">
-            <div class="logo-icon">⚡</div>
-            <span>Zerowing</span>
+            <img src="icon.png" alt="LiveCamera">
+            <span>LiveCamera</span>
         </div>
-        <a href="https://play.google.com/store/apps/developer?id=zerowing" class="play-link" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.76V2.27A2 2 0 0 1 2.18 .51a2 2 0 0 1 2 .09l18 10.73a2 2 0 0 1 0 3.46l-18 10.73a2 2 0 0 1-1 .24z"/></svg>
-            All apps on Play Store
-        </a>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="https://github.com/MuhammadaliMS/livecamera-app">GitHub</a></li>
+            <li><a href="https://buymeacoffee.com/zerowing" class="coffee-btn">☕ Buy me a coffee</a></li>
+        </ul>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-badge">Zerowing Studios</div>
-        <h1>Simple Apps,<br>Real Problems Solved</h1>
-        <p>We build free, practical Android apps used by thousands of people every day.</p>
-        <div class="hero-stats">
-            <div class="stat">
-                <div class="stat-value">4+</div>
-                <div class="stat-label">Apps Published</div>
+        <img src="icon.png" alt="LiveCamera" class="hero-icon">
+        <h1>LiveCamera</h1>
+        <p class="tagline">Transform your smartphone into a professional HD webcam. Perfect for video calls, streaming, and content creation.</p>
+        
+        <a href="https://github.com/MuhammadaliMS/livecamera-app/releases/download/v1.0.0/Live.Camera.Setup.exe" class="download-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5 20h14v-2H5v2zm7-18l-6 6h4v6h4v-6h4l-6-6z" transform="rotate(180 12 12)"/>
+            </svg>
+            Download for Windows
+        </a>
+        <p class="platform-info">Windows 10/11 • v1.0.0 • 100% Free</p>
+
+        <!-- Windows SmartScreen Notice -->
+        <div class="windows-notice">
+            <h3>⚠️ Windows Security Notice</h3>
+            <p>When you run the installer, Windows may show a blue "Windows protected your PC" warning. This happens because I'm an independent developer and can't afford expensive code signing certificates ($300+/year).</p>
+            
+            <div class="steps">
+                <ol>
+                    <li>Click <strong>"More info"</strong> on the warning screen</li>
+                    <li>Click <strong>"Run anyway"</strong></li>
+                    <li>That's it! The installer will run normally</li>
+                </ol>
             </div>
-            <div class="stat">
-                <div class="stat-value">4.1★</div>
-                <div class="stat-label">Top Rated App</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value">100%</div>
-                <div class="stat-label">Free to Use</div>
+
+            <div class="solo-dev-note">
+                <div class="emoji">👨‍💻</div>
+                <div class="text">
+                    <p><strong>Solo Developer Project</strong><br>
+                    I built LiveCamera in my spare time as a free alternative to paid webcam apps. If you find it useful, consider supporting the project!</p>
+                </div>
+                <a href="https://buymeacoffee.com/zerowing" class="coffee-link">☕ Support</a>
             </div>
         </div>
     </section>
 
-    <section class="apps">
-        <div class="section-label">Our Apps</div>
-        <h2 class="section-title">Built to be useful</h2>
-
-        <div class="apps-grid">
-
-            <!-- LiveCamera Android -->
-            <a href="https://play.google.com/store/apps/developer?id=zerowing" class="app-card" target="_blank" rel="noopener">
-                <div class="app-icon" style="background: linear-gradient(135deg, #1a73e8, #0d47a1);">📷</div>
-                <div class="app-info">
-                    <div class="app-name">LiveCamera – Wifi Webcam</div>
-                    <div class="app-desc">Turn your Android phone into a high-quality webcam for your PC over Wi-Fi. Works with Zoom, Teams, OBS, and more.</div>
-                    <div class="app-meta">
-                        <span class="app-rating">★ 4.1</span>
-                        <span class="app-tag green">Android</span>
-                        <span class="app-tag">Productivity</span>
-                        <span class="play-badge">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.76V2.27A2 2 0 0 1 2.18 .51a2 2 0 0 1 2 .09l18 10.73a2 2 0 0 1 0 3.46l-18 10.73a2 2 0 0 1-1 .24z"/></svg>
-                            Play Store
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Hearing Aid -->
-            <a href="https://play.google.com/store/apps/details?id=com.zerowing.HearingLive" class="app-card" target="_blank" rel="noopener">
-                <div class="app-icon" style="background: linear-gradient(135deg, #7c3aed, #4c1d95);">🦻</div>
-                <div class="app-info">
-                    <div class="app-name">Hearing Aid – Ear Sound Magnifier</div>
-                    <div class="app-desc">Amplify the sounds around you in real time using your phone's microphone and earphones. Great for hard-of-hearing users.</div>
-                    <div class="app-meta">
-                        <span class="app-rating">★ 3.9</span>
-                        <span class="app-tag green">Android</span>
-                        <span class="app-tag">Accessibility</span>
-                        <span class="play-badge">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.76V2.27A2 2 0 0 1 2.18 .51a2 2 0 0 1 2 .09l18 10.73a2 2 0 0 1 0 3.46l-18 10.73a2 2 0 0 1-1 .24z"/></svg>
-                            Play Store
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Live Mic -->
-            <a href="https://play.google.com/store/apps/details?id=com.zerowing.LiveMic" class="app-card" target="_blank" rel="noopener">
-                <div class="app-icon" style="background: linear-gradient(135deg, #dc2626, #7f1d1d);">🎤</div>
-                <div class="app-info">
-                    <div class="app-name">Live Mic – Karaoke No Lag Amplify</div>
-                    <div class="app-desc">A live microphone app with minimal latency. Perfect for karaoke, public speaking practice, or as a personal amplifier.</div>
-                    <div class="app-meta">
-                        <span class="app-rating">★ 3.7</span>
-                        <span class="app-tag green">Android</span>
-                        <span class="app-tag">Audio</span>
-                        <span class="play-badge">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.76V2.27A2 2 0 0 1 2.18 .51a2 2 0 0 1 2 .09l18 10.73a2 2 0 0 1 0 3.46l-18 10.73a2 2 0 0 1-1 .24z"/></svg>
-                            Play Store
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- SpotMusic -->
-            <a href="https://play.google.com/store/apps/details?id=com.zerowing.relaxchillzone" class="app-card" target="_blank" rel="noopener">
-                <div class="app-icon" style="background: linear-gradient(135deg, #059669, #064e3b);">🎵</div>
-                <div class="app-info">
-                    <div class="app-name">SpotMusic – Relax Meditate Sleep</div>
-                    <div class="app-desc">Ambient sounds and relaxing music to help you focus, meditate, or fall asleep. Nature sounds, white noise, and more.</div>
-                    <div class="app-meta">
-                        <span class="app-tag green">Android</span>
-                        <span class="app-tag">Wellness</span>
-                        <span class="play-badge">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 1-1-.27 2 2 0 0 1-1-1.76V2.27A2 2 0 0 1 2.18 .51a2 2 0 0 1 2 .09l18 10.73a2 2 0 0 1 0 3.46l-18 10.73a2 2 0 0 1-1 .24z"/></svg>
-                            Play Store
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- LiveCamera Windows - full width -->
-            <a href="https://github.com/MuhammadaliMS/livecamera-app/releases/download/v1.0.0/Live.Camera.Setup.exe" class="app-card windows-card" target="_blank" rel="noopener" style="grid-column: 1 / -1;">
-                <div class="app-icon" style="background: linear-gradient(135deg, #0078d4, #005a9e);">🖥️</div>
-                <div class="app-info">
-                    <div class="app-name">LiveCamera – Windows Client</div>
-                    <div class="app-desc">The Windows companion app for LiveCamera. Receives the video stream from your phone and makes it available as a virtual webcam on your PC.</div>
-                    <div class="app-meta">
-                        <span class="app-tag">Windows 10/11</span>
-                        <span class="app-tag">Free Download</span>
-                        <span class="app-tag">v1.0.0</span>
-                        <span class="play-badge" style="gap:6px;">
-                            ⬇ Download .exe
-                        </span>
-                    </div>
-                </div>
-            </a>
-
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Why LiveCamera?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Use Your Phone</h3>
+                <p>Turn your existing smartphone into a high-quality webcam. No expensive equipment needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎥</div>
+                <h3>HD Quality</h3>
+                <p>Stream in crystal-clear HD. Your phone's camera is better than most webcams.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Low Latency</h3>
+                <p>Optimized H.264 encoding for minimal delay in real-time calls.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>Virtual Camera</h3>
+                <p>Works with Zoom, Meet, Teams, OBS, Discord, and any webcam app.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📶</div>
+                <h3>WiFi Connection</h3>
+                <p>Connect wirelessly over your local network. No cables needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎛️</div>
+                <h3>Camera Controls</h3>
+                <p>Adjust brightness, ISO, zoom, and more from the Windows client.</p>
+            </div>
         </div>
     </section>
 
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title">Get Started in 3 Steps</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Download & Install</h3>
+                <p>Download the Windows client and install it on your PC.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Connect Your Phone</h3>
+                <p>Open the LiveCamera app on your phone and connect.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Start Streaming</h3>
+                <p>Select "Live Camera" as your webcam in any app.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-logo">
-            <div class="logo-icon">⚡</div>
-            <span>Zerowing Studios</span>
+            <img src="icon.png" alt="LiveCamera">
+            <span>LiveCamera</span>
         </div>
-        <p>Building free apps from Kerala, India. &nbsp;Made with ❤️ by a solo developer.</p>
+        <p>© 2024 <strong>Zerowing Studios</strong>. Made with ❤️ by a solo developer.</p>
         <div class="footer-links">
-            <a href="https://play.google.com/store/apps/developer?id=zerowing" target="_blank" rel="noopener">Google Play</a>
-            <a href="https://github.com/MuhammadaliMS" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://buymeacoffee.com/zerowing" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+            <a href="https://github.com/MuhammadaliMS/livecamera-app">GitHub</a>
             <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="https://buymeacoffee.com/zerowing">☕ Buy me a coffee</a>
         </div>
     </footer>
 </body>
